@@ -10,7 +10,7 @@ const useCountdown: UseCountdown = (timeToCount = 60000, interval = 1000) => {
     timeToCount,
   };
 
-  const [timeLeft, setTimeLeft] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(timeToCount);
   const timer = useRef<Countdown>(defaultCountdown);
 
   const run = (ts: number) => {
@@ -38,17 +38,17 @@ const useCountdown: UseCountdown = (timeToCount = 60000, interval = 1000) => {
     }
   };
 
-  const start = useCallback((ttc?: number) => {
+  const start = useCallback((newTimeToCount?: number) => {
     if (timer.current.requestId)
       window.cancelAnimationFrame(timer.current.requestId);
 
-    const newTimeToCount: number = ttc !== undefined ? ttc : timeToCount;
+    const ttc: number = newTimeToCount !== undefined ? newTimeToCount : timeToCount;
     timer.current.started = undefined;
     timer.current.lastInterval = undefined;
-    timer.current.timeToCount = newTimeToCount;
+    timer.current.timeToCount = ttc;
     timer.current.requestId = window.requestAnimationFrame(run);
 
-    setTimeLeft(newTimeToCount);
+    setTimeLeft(ttc);
   }, []);
 
   const pause = useCallback(() => {
