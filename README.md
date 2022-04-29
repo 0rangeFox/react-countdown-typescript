@@ -1,47 +1,35 @@
-![react-countdown-hook](./assets/cover.png)
-<p align="center">Dead simple yet powerful countdown hook for React. Powered by <code>requestAnimationFrame</code>.</p>
-<p align="center">
-    <a href="https://circleci.com/gh/alexkhismatulin/react-use-count-down">
-        <img src="https://circleci.com/gh/alexkhismatulin/react-use-count-down.svg?style=svg" />
-    </a>
-    <a href="https://coveralls.io/github/alexkhismatulin/react-use-count-down?branch=master">
-        <img src="https://coveralls.io/repos/github/alexkhismatulin/react-use-count-down/badge.svg?branch=master" />
-    </a>
-    <a href="https://www.npmjs.com/package/react-countdown-hook">
-        <img src="https://img.shields.io/npm/v/react-countdown-hook.svg" />
-    </a>
-</p>
+<h1 align="center"><img src="https://cdn.iconscout.com/icon/free/png-32/typescript-1174965.png" /> Countdown</h1>
+<h6 align="center"><a href="https://www.npmjs.com/package/react-countdown-typescript"><img src="https://img.shields.io/npm/v/react-countdown-typescript.svg?style=flat-square" /></a></h6>
 
-## Installation
-Using npm:
+> A ReactJS library where contains useful utilities related to countdowns.
 
-```sh
-$ npm install --save react-countdown-hook
+## 🔖 Description
+The following library allows us to use the countdown hooks to control the countdowns more effectively. This library was not made by me, but by [Alex Khismatulin](https://github.com/alexkhismatulin), this is just maintenance and improvements of the [library](https://github.com/alexkhismatulin/react-use-count-down).
+
+## 💾 Installation
+```bash
+# NPM
+npm install react-countdown-typescript
+
+# Yarn
+yarn add react-countdown-typescript
 ```
 
-Using yarn:
-
-```sh
-$ yarn add react-countdown-hook
-```
-
-## Quick Start
-```javascript
-import React from 'react';
-import useCountDown from 'react-countdown-hook';
+## ⌨️ Code example
+```typescript jsx
+import { useCallback, useEffect } from 'react';
+import { useCountdown } from 'react-countdown-typescript';
 
 const initialTime = 60 * 1000; // initial time in milliseconds, defaults to 60000
 const interval = 1000; // interval to change remaining time amount, defaults to 1000
 
-const render = () => {
-  const [timeLeft, { start, pause, resume, reset }] = useCountDown(initialTime, interval);
-  
+const App = () => {
+  const [timeLeft, { start }] = useCountdown(initialTime, interval);
+
   // start the timer during the first render
-  React.useEffect(() => {
-    start();
-  }, []);
-  
-  const restart = React.useCallback(() => {
+  useEffect(start, []);
+
+  const restart = useCallback(() => {
     // you can start existing timer with an arbitrary value
     // if new value is not passed timer will start with initial value
     const newTime = 42 * 1000;
@@ -49,39 +37,20 @@ const render = () => {
   }, []);
  
   return (
-    <>
+    <div>
       <p>Time left: {timeLeft}</p>
- 
-      <button onClick={restart}>
-        Restart counter with 42 seconds
-      </button>
-    </>
+      <button onClick={restart}>Restart counter with 42 seconds</button>
+    </div>
   );
 }
 ```
 
-Note that this is a very basic usage. Check out more usage examples
-[in playground](https://stackblitz.com/edit/react-use-count-down?file=index.js "react-countdown-hook on stackblitz")
-or [in the demo project](./demo/index.js "react-countdown-hook demo project")
+## 🤝 Contributing
+This project will always remain open source and any kind of contribution is welcome. By participating in this project, you agree to keep common sense and contribute in a positive way.
 
-## Documentation
-### [timeLeft, actions] = useCountDown(timeToCount, interval)
+## 📰 Credits
+A special thanks to [Alex Khismatulin](https://github.com/alexkhismatulin) who had the idea to start this project and to their contributors who also invested the time in making the improvements and bugfixes.
 
-#### Parameters
-Takes a default countdown time and interval time.
-* `timeToCount` {`Number`} Time in milliseconds that countdown should start with. **Defaults to `60000`**
-* `interval` {`Number`} Time in milliseconds representing the frequency that countdown should update with. **Defaults to `1000`**
-
-#### Return value
-Returns an array with remaining time and actions object.
-* `timeLeft` {`Number`} Remaining countdown time in milliseconds
-* `actions.start` {`Function`} Start or restart a countdown. Takes time in milliseconds to start with.
-* `actions.reset` {`Function`} Resets a countdown to initial state
-* `actions.pause` {`Function`} Pauses a countdown
-* `actions.resume` {`Function`} Resumes a paused countdown
-
-## Contributing
-Feel free to submit any issues or pull requests.
-
-## License
-MIT
+## 📝 License
+Copyright © 2022 [João Fernandes](https://github.com/0rangeFox). <br/>
+This project is [MIT](https://github.com/0rangeFox/react-countdown-typescript/blob/master/LICENSE) licensed.
